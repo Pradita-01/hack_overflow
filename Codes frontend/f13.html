@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glacial Lake Outburst Warning System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #121212; /* Dark background */
+            color: #e0e0e0; /* Light grey text for contrast */
+            padding: 50px;
+        }
+        h1 {
+            color: #ff4c4c; /* Softer red for the title */
+        }
+        #status {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #ff914d; /* Softer orange for status */
+        }
+        #warning {
+            display: none;
+            padding: 20px;
+            background-color: #b00020; /* Darker red background for warning */
+            color: white;
+            border-radius: 5px;
+            margin-top: 20px;
+            position: relative;
+        }
+        #warning::before {
+            content: "\26A0"; /* Unicode for warning sign */
+            font-size: 50px;
+            color: #ffffff;
+            position: absolute;
+            top: -10px;
+            left: -10px;
+        }
+        #inputForm {
+            margin-top: 20px;
+        }
+        label {
+            margin-right: 10px;
+        }
+        input[type="number"] {
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #2c2c2c; /* Darker input field background */
+            color: #e0e0e0; /* Light grey text */
+            border: 1px solid #555555;
+            border-radius: 5px;
+        }
+        input[type="number"]::placeholder {
+            color: #888888; /* Placeholder text color */
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #1e88e5; /* Lighter blue button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1565c0; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Glacial Lake Outburst Warning System</h1>
+    <p>This system monitors glacial lakes and provides real-time alerts if a potential outburst is detected.</p>
+
+    <div id="inputForm">
+        <label for="lakeSize">Lake Size:</label>
+        <input type="number" id="lakeSize" placeholder="Enter lake size" required>
+        <br>
+        <label for="waterLevel">Water Level:</label>
+        <input type="number" id="waterLevel" placeholder="Enter water level" required>
+        <br>
+        <button onclick="checkLakeData()">Check for Warning</button>
+    </div>
+
+    <div id="status">
+        Enter the lake size and water level to start monitoring.
+    </div>
+    
+    <div id="warning">
+        <h2>⚠ Warning: Potential Glacial Lake Outburst Detected!</h2>
+        <p>Please inform the people immediatley.</p>
+    </div>
+
+    <script>
+        function checkLakeData() {
+            const lakeSize = parseFloat(document.getElementById('lakeSize').value);
+            const waterLevel = parseFloat(document.getElementById('waterLevel').value);
+            const thresholdSize = 90;
+            const thresholdWaterLevel = 110;
+
+            if (lakeSize > thresholdSize || waterLevel > thresholdWaterLevel) {
+                document.getElementById('warning').style.display = 'block';
+                document.getElementById('status').innerText = 'Dangerous conditions detected!';
+            } else {
+                document.getElementById('status').innerText = 'Lake conditions are within safe limits.';
+                document.getElementById('warning').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

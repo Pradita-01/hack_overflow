@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siachen Glacier Monitoring</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #1e1e1e;
+            color: #dcdcdc;
+        }
+        .container {
+            margin-top: 40px;
+        }
+        h1, h3 {
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .param-circle {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background-color: #292929;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            position: relative;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .param-circle:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.8);
+        }
+        .param-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #a0a0a0;
+            position: absolute;
+            top: 20px;
+        }
+        .param-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .param-unit {
+            font-size: 0.8em;
+            color: #b0b0b0;
+            margin-left: 5px;
+        }
+        .image-container {
+            height: 400px;
+            width: 100%;
+            border-radius: 12px;
+            margin-top: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.8);
+        }
+        .graph-container {
+            background-color: #292929;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            margin-top: 20px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 0.9em;
+            color: #666;
+            background-color: #2a2a2a;
+            margin-top: 40px;
+            border-top: 1px solid #444;
+        }
+        .btn-warning {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 40px;
+            background-color: #ff4c4c;
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 76, 76, 0.4);
+        }
+        .btn-warning:hover {
+            background-color: #ff1c1c;
+        }
+        .stability-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ff4c4c; /* Default red for "Low" */
+        }
+        /* Color for "Medium" */
+        .param-circle.medium .stability-indicator {
+            background-color: #ffc107; /* Yellow */
+        }
+        /* Color for "High" */
+        .param-circle.high .stability-indicator {
+            background-color: #28a745; /* Green */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Siachen Glacier Monitoring Dashboard</h1>
+        <p class="text-center">Track key environmental metrics of the Siachen Glacier.</p>
+
+        <div class="row text-center justify-content-center">
+            <!-- Lake Size Circle -->
+            <div class="col-md-3">
+                <div class="param-circle">
+                    <div>
+                        <h5 class="param-title">Lake Size</h5>
+                        <p class="param-value">18<span class="param-unit">km²</span></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Temperature Circle -->
+            <div class="col-md-3">
+                <div class="param-circle">
+                    <div>
+                        <h5 class="param-title">Temperature</h5>
+                        <p class="param-value">-12<span class="param-unit">°C</span></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Water Level Circle -->
+            <div class="col-md-3">
+                <div class="param-circle medium"> <!-- Update class based on status -->
+                    <div>
+                        <h5 class="param-title">Water Level</h5>
+                        <p class="param-value">Medium</p>
+                        <div class="stability-indicator"></div> <!-- Small circle for color code -->
+                    </div>
+                </div>
+            </div>
+            <!-- Dam Stability Circle -->
+            <div class="col-md-3">
+                <div class="param-circle high"> <!-- Update class based on status -->
+                    <div>
+                        <h5 class="param-title">Dam Stability</h5>
+                        <p class="param-value">Stable</p>
+                        <div class="stability-indicator"></div> <!-- Small circle for color code -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Warning Button -->
+        <div class="text-center">
+            <a href="warning.html" class="btn-warning">Check Warning</a>
+        </div>
+
+        <!-- Image and Graph Section -->
+        <div class="row mt-4">
+            <!-- Static Image of Location -->
+            <div class="col-md-6">
+                <h3>Location of Siachen Glacier</h3>
+                <div class="image-container">
+                    <img src="siachen.png" alt="Siachen Glacier Location">
+                </div>
+            </div>
+
+            <!-- Lake Size Graph -->
+            <div class="col-md-6">
+                <h3>Lake Size Over Time</h3>
+                <div class="graph-container">
+                    <canvas id="lakeSizeChartSiachen" class="bar-chart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <!-- Temperature Graph -->
+            <div class="col-md-6">
+                <h3>Temperature Over Time</h3>
+                <div class="graph-container">
+                    <canvas id="temperatureChartSiachen" class="bar-chart"></canvas>
+                </div>
+            </div>
+
+            <!-- Water Level Graph -->
+            <div class="col-md-6">
+                <h3>Water Level Over Time</h3>
+                <div class="graph-container">
+                    <canvas id="waterLevelChartSiachen" class="bar-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>Siachen Glacier Monitoring &copy; 2024</p>
+    </div>
+
+    <!-- Include Chart.js for Graphs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+    <script>
+        // Data for Lake Size
+        var lakeSizeCtx = document.getElementById('lakeSizeChartSiachen').getContext('2d');
+        var lakeSizeChart = new Chart(lakeSizeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September'],
+                datasets: [{
+                    label: 'Lake Size (km²)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    data: [17, 17.2, 17.5, 17.6, 17.8, 17.9, 18, 18.1, 18]
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            fontColor: '#dcdcdc'
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: '#dcdcdc'
+                        }
+                    }]
+                },
+                legend: {
+                    labels: {
+                        fontColor: '#dcdcdc'
+                    }
+                }
+            }
+        });
+
+        // Data for Temperature
+        var temperatureCtx = document.getElementById('temperatureChartSiachen').getContext('2d');
+        var temperatureChart = new Chart(temperatureCtx, {
+            type: 'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September'],
+                datasets: [{
+                    label: 'Temperature (°C)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1,
+                    data: [-13, -12.5, -12, -11.5, -11, -10.5, -10, -9.5, -11]
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            fontColor: '#dcdcdc'
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: '#dcdcdc'
+                        }
+                    }]
+                },
+                legend: {
+                    labels: {
+                        fontColor: '#dcdcdc'
+                    }
+                }
+            }
+        });
+
+        // Data for Water Level
+        var waterLevelCtx = document.getElementById('waterLevelChartSiachen').getContext('2d');
+        var waterLevelChart = new Chart(waterLevelCtx, {
+            type: 'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September'],
+                datasets: [{
+                    label: 'Water Level',
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
+                    data: [55, 60, 65, 70, 75, 80, 85, 90, 95]
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            fontColor: '#dcdcdc'
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: '#dcdcdc'
+                        }
+                    }]
+                },
+                legend: {
+                    labels: {
+                        fontColor: '#dcdcdc'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

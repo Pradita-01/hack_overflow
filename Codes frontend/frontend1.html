@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gangotri Glacier Monitoring</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #1e1e1e;
+            color: #dcdcdc;
+        }
+        .container {
+            margin-top: 40px;
+        }
+        h1, h3 {
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .param-circle {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background-color: #292929;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            position: relative;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .param-circle:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.8);
+        }
+        .param-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #a0a0a0;
+            position: absolute;
+            top: 20px;
+        }
+        .param-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .param-unit {
+            font-size: 0.8em;
+            color: #b0b0b0;
+            margin-left: 5px;
+        }
+        .small-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+           
+        }
+        /* Color codes for Dam Stability */
+        .low-stability {
+            background-color: green;
+        }
+        .medium-stability {
+            background-color: yellow;
+        }
+        .high-stability {
+            background-color: red;
+        }
+        .image-container {
+            height: 400px;
+            width: 100%;
+            border-radius: 12px;
+            margin-top: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.8);
+        }
+        .graph-container {
+            background-color: #292929;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            margin-top: 20px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 0.9em;
+            color: #666;
+            background-color: #2a2a2a;
+            margin-top: 40px;
+            border-top: 1px solid #444;
+        }
+        .btn-warning {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 40px;
+            background-color: #ff4c4c;
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 76, 76, 0.4);
+        }
+        .btn-warning:hover {
+            background-color: #ff1c1c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Gangotri Glacier Monitoring Dashboard</h1>
+        <p class="text-center">Track key environmental metrics of the Gangotri Glacier.</p>
+
+        <div class="row text-center justify-content-center">
+            <!-- Lake Size Circle -->
+            <div class="col-md-3">
+                <div class="param-circle">
+                    <div>
+                        <h5 class="param-title">Lake Size</h5>
+                        <p class="param-value">25<span class="param-unit">km²</span></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Temperature Circle -->
+            <div class="col-md-3">
+                <div class="param-circle">
+                    <div>
+                        <h5 class="param-title">Temperature</h5>
+                        <p class="param-value">-10<span class="param-unit">°C</span></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Water Level Circle -->
+            <div class="col-md-3">
+                <div class="param-circle">
+                    <div>
+                        <h5 class="param-title">Water Level</h5>
+                        <p class="param-value">Medium</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Dam Stability Circle with Color Indicator -->
+            <div class="col-md-3">
+                <div class="param-circle">
+                    <div>
+                        <h5 class="param-title">Dam Stability</h5>
+                        <p class="param-value">Low</p>
+                        <div class="small-circle low-stability"></div> <!-- Color-coded stability -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Warning Button -->
+        <div class="text-center">
+            <a href="warning.html" class="btn-warning">Check Warning</a>
+        </div>
+
+        <!-- Image and Graph Section -->
+        <div class="row mt-4">
+            <!-- Static Image of Location -->
+            <div class="col-md-6">
+                <h3>Location of Gangotri Glacier</h3>
+                <div class="image-container">
+                    <img src="gangotri.png" alt="Gangotri Glacier Location">
+                </div>
+            </div>
+
+            <!-- Lake Size Graph -->
+            <div class="col-md-6">
+                <h3>Lake Size Over Time</h3>
+                <div class="graph-container">
+                    <canvas id="lakeSizeChart" class="bar-chart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <!-- Temperature Graph -->
+            <div class="col-md-6">
+                <h3>Temperature Over Time</h3>
+                <div class="graph-container">
+                    <canvas id="temperatureChart" class="bar-chart"></canvas>
+                </div>
+            </div>
+
+            <!-- Water Level Graph -->
+            <div class="col-md-6">
+                <h3>Water Level Over Time</h3>
+                <div class="graph-container">
+                    <canvas id="waterLevelChart" class="bar-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>Gangotri Glacier Monitoring &copy; 2024</p>
+    </div>
+
+    <!-- Include Chart.js for Graphs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+    <script>
+        // Data for Lake Size
+        var lakeSizeCtx = document.getElementById('lakeSizeChart').getContext('2d');
+        var lakeSizeChart = new Chart(lakeSizeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September'],
+                datasets: [{
+                    label: 'Lake Size (km²)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    data: [24, 24.2, 24.5, 24.6, 24.8, 24.9, 25, 25.1, 25]
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            fontColor: '#dcdcdc'
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: '#dcdcdc'
+                        }
+                    }]
+                },
+                legend: {
+                    labels: {
+                        fontColor: '#dcdcdc'
+                    }
+                }
+            }
+        });
+
+        // Data for Temperature
+        var temperatureCtx = document.getElementById('temperatureChart').getContext('2d');
+        var temperatureChart = new Chart(temperatureCtx, {
+            type: 'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September'],
+                datasets: [{
+                    label: 'Temperature (°C)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1,
+                    data: [-12, -11, -10.5, -10, -9.5, -9, -8.8, -8.5, -10]
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            fontColor: '#dcdcdc'
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: '#dcdcdc'
+                        }
+                    }]
+                },
+                legend: {
+                    labels: {
+                        fontColor: '#dcdcdc'
+                    }
+                }
+            }
+        });
+
+        // Data for Water Level
+        var waterLevelCtx = document.getElementById('waterLevelChart').getContext('2d');
+        var waterLevelChart = new Chart(waterLevelCtx, {
+            type: 'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September'],
+                datasets: [{
+                    label: 'Water Level',
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
+                    data: [40, 45, 50, 55, 60, 65, 70, 75, 80]
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            fontColor: '#dcdcdc'
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: '#dcdcdc'
+                        }
+                    }]
+                },
+                legend: {
+                    labels: {
+                        fontColor: '#dcdcdc'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
